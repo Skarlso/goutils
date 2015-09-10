@@ -32,3 +32,20 @@ func GenerateNNumberOfPrimes(numberOfPrimes int) []int {
 
 	return primes
 }
+
+//GeneratePrimesToALimit Generates primes up until a certain limit.
+func GeneratePrimesToALimit(limit int) []int {
+	var primes []int
+	ch := make(chan int) // Create a new channel.
+	go generate(ch)      // Start generate() as a subprocess.
+	for {
+		prime := <-ch
+		if prime > limit {
+			return primes
+		}
+		primes = append(primes, prime)
+		ch1 := make(chan int)
+		go filter(ch, ch1, prime)
+		ch = ch1
+	}
+}
