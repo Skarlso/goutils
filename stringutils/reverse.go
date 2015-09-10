@@ -1,5 +1,5 @@
-// Package stringutil contains utility functions for working with strings.
-package stringutil
+// Package stringutils contains utility functions for working with strings.
+package stringutils
 
 // Reverse returns its argument string reversed rune-wise left to right.
 func Reverse(s string) string {
