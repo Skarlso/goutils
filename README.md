@@ -4,30 +4,37 @@ Utilities for Golang that I usually require.
 ArrayUtils
 ==========
 
-# ContainsInt
+ContainsInt
+-----------
 Checks wether an element [int] is in a slice.
 
-# ContainsString
+ContainsString
+-----------
 Checks wether an element [string] is in a slice.
 
-# ReverseString
+ReverseString
+-----------
 Reverses a String slice.
 
-# ReverseInt
+ReverseInt
+-----------
 Reverses an Int slice.
 
 Primes
 ======
 
-# GenerateNNumberOfPrimes
+GenerateNNumberOfPrimes
+-----------
 Generates an 'N' number of primes from 2-N.
 
-# GeneratePrimesToALimit
+GeneratePrimesToALimit
+-----------
 Generates primes to a 'limit'.
 
 
 StringUtils
 ===========
 
-# SortString
+SortString
+----------
 Sorts characters in a string.
