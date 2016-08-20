@@ -17,6 +17,20 @@ func filter(src <-chan int, dst chan<- int, prime int) {
 	}
 }
 
+// Send the sequence 2, 3, 4, … to channel 'ch'.
+func seededGenerate(stop chan bool, ch chan<- int) {
+	go func() {
+		defer close(ch)
+		for i := 2; ; i++ {
+			select {
+			case <-stop:
+				return
+			case ch <- i:
+			}
+		}
+	}()
+}
+
 //GenerateNNumberOfPrimes generates N number of primes and gives them back in a list.
 func GenerateNNumberOfPrimes(numberOfPrimes int) []int {
 	var primes []int
@@ -48,4 +62,26 @@ func GeneratePrimesToALimit(limit int) []int {
 		go filter(ch, ch1, prime)
 		ch = ch1
 	}
+}
+
+//SeedPrimeNumbers Generates primes up until a certain limit.
+func SeedPrimeNumbers(stop chan bool, limit int) <-chan int {
+	out := make(chan int)
+	ch := make(chan int) // Create a new channel.
+	go seededGenerate(stop, ch)      // Start generate() as a subprocess.
+	go func() {
+		defer close(out)
+		for {
+			prime := <-ch
+			if prime > limit {
+				out <- prime
+				return
+			}
+			out <- prime
+			ch1 := make(chan int)
+			go filter(ch, ch1, prime)
+			ch = ch1
+		}
+	}()
+	return out
 }
